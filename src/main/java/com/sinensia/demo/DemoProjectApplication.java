@@ -20,4 +20,10 @@ public class DemoProjectApplication {
 		return String.format("Hello, %s!", palabra);
 	}
 
+	@GetMapping("/")
+	public String otro(@RequestParam(value = "name", defaultValue = "world") String palabra){
+	
+		return String.format("Página root", palabra);
+	}
+
 }
