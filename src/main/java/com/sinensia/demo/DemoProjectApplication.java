@@ -13,6 +13,12 @@ public class DemoProjectApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(DemoProjectApplication.class, args);
 	}
+	
+	@GetMapping("/")
+	public String otro(){
+	
+		return String.format("Página root");
+	}
 
 	@GetMapping("/hello")
 	public String hello(@RequestParam(value = "name", defaultValue = "world") String palabra){
@@ -20,10 +26,6 @@ public class DemoProjectApplication {
 		return String.format("Hello, %s!", palabra);
 	}
 
-	@GetMapping("/")
-	public String otro(@RequestParam(value = "name", defaultValue = "world") String palabra){
-	
-		return String.format("Página root", palabra);
-	}
+
 
 }
