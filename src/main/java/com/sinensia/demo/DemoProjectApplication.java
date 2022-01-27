@@ -13,19 +13,15 @@ public class DemoProjectApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(DemoProjectApplication.class, args);
 	}
-	
+
 	@GetMapping("/")
-	public String otro(){
-	
-		return String.format("Página root");
+	public String root() {
+		return "Hola ke ase";
 	}
 
 	@GetMapping("/hello")
-	public String hello(@RequestParam(value = "name", defaultValue = "world") String palabra){
-	
-		return String.format("Hello, %s!", palabra);
+	public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
+		return String.format("Hello %s!", name);
 	}
-
-
 
 }
