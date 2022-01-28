@@ -24,4 +24,11 @@ public class DemoProjectApplication {
 		return String.format("Hello %s!", name);
 	}
 
+	@GetMapping("/add")
+	public String adding(@RequestParam(value = "a", defaultValue = "0") int a, @RequestParam(value="b", defaultValue = "0") int b) {
+		int resultado = 0;
+		resultado = a+b;
+		return Integer.toString(resultado);
+	}
+
 }
