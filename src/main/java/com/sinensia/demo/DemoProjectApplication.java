@@ -25,39 +25,28 @@ public class DemoProjectApplication {
 	}
 
 	@GetMapping("/add")
-	public String adding(@RequestParam(value = "a", defaultValue = "0") float a, @RequestParam(value="b", defaultValue = "0") float b) {
-		float resultado = 0;
-		System.out.println("a: "+a+" y b:"+b);
-		resultado = a+b;
-		if(resultado !=0 && checkIfFloat(resultado)==-1){ //es decimal
-			return Float.toString(resultado);
+	public Object add(
+			@RequestParam(value="a", defaultValue = "0") Float a,
+			@RequestParam(value="b", defaultValue = "0") Float b
+	) {
+		Float sum = a+b;
+		Float decimals = sum - sum.intValue();
+		if(decimals!=0) {
+			return sum;
 		}
-		else{
-			return Integer.toString(checkIfFloat(resultado));
-		}
+		return Integer.valueOf(sum.intValue());
 	}
 
-	@GetMapping("/multi")
-	public String multiply(@RequestParam(value = "a", defaultValue = "0") float a, @RequestParam(value="b", defaultValue = "0") float b) {
-		float resultado = 0;
-		System.out.println("a: "+a+" y b:"+b);
-		resultado = a*b;
-		if(resultado !=0 && checkIfFloat(resultado)==-1){ //es decimal
-			return Float.toString(resultado);
+	@GetMapping("/multiply")
+	public Object multiply(
+			@RequestParam(value="a", defaultValue = "0") Float a,
+			@RequestParam(value="b", defaultValue = "0") Float b
+	) {
+		Float product = a * b;
+		Float decimals = product - product.intValue();
+		if(decimals!=0) {
+			return product;
 		}
-		else{
-			return Integer.toString(checkIfFloat(resultado));
-		}
-	}
-
-
-	public int checkIfFloat(float check){
-		int auxA = Math.round(check);
-		if(check-auxA != 0){
-			return -1;
-		}
-		else{
-			return auxA;
-		}
+		return Integer.valueOf(product.intValue());
 	}
 }
