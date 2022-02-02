@@ -62,12 +62,16 @@ public class DemoProjectApplication {
 			@RequestParam(value="a", defaultValue = "0") Float a,
 			@RequestParam(value="b", defaultValue = "0") Float b
 	) {
-		Float sub = a - b;
-		Float decimals = sub - sub.intValue();
+		Float sub = 0f;
+		sub = a - b;
+		Float decimals = 0f;
+		decimals = sub - sub.intValue();
 		if(decimals!=0) {
 			return sub;
 		}
-		return Integer.valueOf(sub.intValue());
+		else{
+			return Integer.valueOf(sub.intValue());
+		}
 	}
 
 	@GetMapping("/divide")
