@@ -92,7 +92,7 @@ class DemoProjectApplicationTests {
 	@Test
 	void canAddZero() {
 		assertThat(restTemplate.getForObject("/add?a=0" + Y_PARAM_STRING + "2", String.class))
-				.isEqualTo("2");
+				.isEqualTo("3");
 	}
 
 	@Test
