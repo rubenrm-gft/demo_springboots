@@ -265,4 +265,25 @@ class DemoProjectApplicationTests {
 		}
 	}
 
+
+	@Nested
+	class SquareRootTests {
+		@DisplayName("multiple roots")
+		@ParameterizedTest(name="{displayName} [{index}] {0}'(-1/2) = {1}")
+		@CsvSource({
+				"4, 2",
+				"100, 10",
+				"1.0, 1.0",
+				"-3, 0",
+				"-0.12, 0",
+				"2, 1.41"
+		})
+		void canSqrtCsvParameterizedFloat(String a, String expected) {
+			assertThat(restTemplate.getForObject("/sqrt?a="+a, Float.class))
+					.isEqualTo(Float.parseFloat(expected));
+		}
+
+
+	}
+
 }

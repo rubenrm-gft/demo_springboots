@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Generated;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 import static java.math.RoundingMode.HALF_DOWN;
 
@@ -75,6 +76,27 @@ public class DemoProjectApplication {
 			@RequestParam(value="b", defaultValue = "0") BigDecimal b
 	) {
 		return a.divide(b, 2, HALF_DOWN);
+	}
+
+	@GetMapping("/sqrt")
+	public BigDecimal squareroot(
+			@RequestParam(value="a", defaultValue = "0") double a
+	) {
+		if(a<0){
+			a = 0;
+		}
+			return truncateDecimal(Math.sqrt(a), 2);
+
+	}
+
+	private static BigDecimal truncateDecimal(double x,int numberofDecimals)
+	{
+		if(x>0){
+			return new BigDecimal(String.valueOf(x)).setScale(numberofDecimals, BigDecimal.ROUND_FLOOR);
+		}
+		else {
+			return new BigDecimal(String.valueOf(x)).setScale(numberofDecimals, BigDecimal.ROUND_CEILING);
+		}
 	}
 
 }
