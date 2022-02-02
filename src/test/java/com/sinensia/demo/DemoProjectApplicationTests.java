@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @AutoConfigureWebTestClient
 class DemoProjectApplicationTests {
 
-	@Autowired TestRestTemplate restTemplate;
+	@Autowired transient TestRestTemplate restTemplate;
 
 	@Test
 	void contextLoads() {
@@ -240,6 +240,29 @@ class DemoProjectApplicationTests {
 					.isEqualTo(expected);
 		}
 
+	}
+
+	@Nested
+	class DivideTests {
+		@DisplayName("multiple divisions")
+		@ParameterizedTest(name="{displayName} [{index}] {0} / {1} = {2}")
+		@CsvSource({
+				"10,   2,   5.00",
+				"10,  -1, -10.00",
+				" 1.0, 1.0, 1.00",
+				"10,   3,   3.33"
+		})
+		void canAddCsvParameterizedFloat(String a, String b, String expected) {
+			assertThat(restTemplate.getForObject("/divide?a="+a+"&b="+b, Float.class))
+					.isEqualTo(Float.parseFloat(expected));
+		}
+
+		@Test
+		void divideByZero() {
+			Exception thrown = assertThrows(RestClientException.class, ()->{
+				restTemplate.getForObject("/divide?a=10&b=0", Float.class);
+			});
+		}
 	}
 
 }

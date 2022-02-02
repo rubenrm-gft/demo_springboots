@@ -2,25 +2,27 @@ pipeline {
     agent any
 
     stages {
-        stage('Test'){
+        stage('Test') {
             steps {
                 sh './gradlew clean test'
             }
-            post{
-                always{
+            post {
+                always {
                     junit 'build/test-results/test/*.xml'
-                    jacoco execPattern 'build/jacoco/*.exec'
+                    jacoco execPattern: 'build/jacoco/*.exec'
+                    recordIssues{
+                        tools: [
+                            pmdParser(pattern: 'build/reports/pmd/*.xmls')
+                        ]
+                    }
                 }
             }
         }
         stage('Build') {
             steps {
-                // Get some code from a GitHub repository
-                git branch: 'main', url: 'https://github.com/rubenrm-gft/demo_springboots.git'
                 // Run Gradle Wrapper
                 sh "./gradlew assemble"
             }
-
             post {
                 // If Gradle was able to run the tests, even if some of the test
                 // failed, record the test results and archive the jar file.
@@ -29,8 +31,10 @@ pipeline {
                 }
             }
         }
-        stage('Deploy'){
-            echo 'Deploying...'
+        stage('Deploy') {
+            steps {
+                   echo 'Deploying...'
+            }
         }
     }
 }
