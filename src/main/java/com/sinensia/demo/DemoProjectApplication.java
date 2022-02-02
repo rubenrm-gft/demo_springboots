@@ -92,12 +92,8 @@ public class DemoProjectApplication {
 
 	private static BigDecimal truncateDecimal(double x)
 	{
-		if(x>0){
-			return new BigDecimal(String.valueOf(x)).setScale(2, BigDecimal.ROUND_FLOOR);
-		}
-		else {
 			return new BigDecimal(String.valueOf(x)).setScale(2, BigDecimal.ROUND_CEILING);
-		}
+
 	}
 
 }
