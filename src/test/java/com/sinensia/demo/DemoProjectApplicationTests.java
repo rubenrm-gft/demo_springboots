@@ -3,9 +3,7 @@ package com.sinensia.demo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +22,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class DemoProjectApplicationTests {
 
 	@Autowired transient TestRestTemplate restTemplate;
+
+	@Autowired private transient DemoProjectApplication app;
 
 	@Test
 	void contextLoads() {
@@ -164,9 +164,7 @@ class DemoProjectApplicationTests {
 
 	@Test
 	void canAddFloatException() {
-		Exception thrown = assertThrows(RestClientException.class, ()->{
-			restTemplate.getForObject("/add?a=hola&b=2", Float.class);
-		});
+		assertThrows(RestClientException.class, ()-> restTemplate.getForObject("/add?a=hola&b=2", Float.class));
 	}
 
 	@DisplayName("multiple additions")
@@ -197,8 +195,7 @@ class DemoProjectApplicationTests {
 	@DisplayName(value="Application tests")
 	class AppTests {
 
-		@Autowired
-		private DemoProjectApplication app;
+
 
 		@Test
 		void appCanAddReturnsInteger() {
@@ -212,9 +209,7 @@ class DemoProjectApplicationTests {
 
 		@Test
 		void addCanAddNull() {
-			Exception thrown = assertThrows(NullPointerException.class, ()->{
-				Float ret = (Float) app.add(null, 2f);
-			});
+			Exception thrown = assertThrows(NullPointerException.class, ()-> app.add(null, 2f));
 			assertTrue(thrown.toString().contains("NullPointerException"));
 			// alternatively check thrown.getMessage().contains("");
 		}
@@ -259,9 +254,7 @@ class DemoProjectApplicationTests {
 
 		@Test
 		void divideByZero() {
-			Exception thrown = assertThrows(RestClientException.class, ()->{
-				restTemplate.getForObject("/divide?a=10&b=0", Float.class);
-			});
+			assertThrows(RestClientException.class, ()-> restTemplate.getForObject("/divide?a=10&b=0", Float.class));
 		}
 	}
 

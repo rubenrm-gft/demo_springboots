@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Generated;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 
 import static java.math.RoundingMode.HALF_DOWN;
 
@@ -36,12 +35,12 @@ public class DemoProjectApplication {
 			@RequestParam(value="a", defaultValue = "0") Float a,
 			@RequestParam(value="b", defaultValue = "0") Float b
 	) {
-		Float sum = a+b;
-		Float decimals = sum - sum.intValue();
+		float sum = a+b;
+		float decimals = sum - (int) sum;
 		if(decimals!=0) {
 			return sum;
 		}
-		return Integer.valueOf(sum.intValue());
+		return (int) sum;
 	}
 
 	@GetMapping("/multiply")
@@ -49,12 +48,12 @@ public class DemoProjectApplication {
 			@RequestParam(value="a", defaultValue = "0") Float a,
 			@RequestParam(value="b", defaultValue = "0") Float b
 	) {
-		Float product = a * b;
-		Float decimals = product - product.intValue();
+		float product = a * b;
+		float decimals = product - (int) product;
 		if(decimals!=0) {
 			return product;
 		}
-		return Integer.valueOf(product.intValue());
+		return (int) product;
 	}
 
 	@GetMapping("/subtract")
@@ -62,15 +61,13 @@ public class DemoProjectApplication {
 			@RequestParam(value="a", defaultValue = "0") Float a,
 			@RequestParam(value="b", defaultValue = "0") Float b
 	) {
-		Float sub = 0f;
-		sub = a - b;
-		Float decimals = 0f;
-		decimals = sub - sub.intValue();
+		float sub = a - b;
+		float decimals = sub - (int) sub;
 		if(decimals!=0) {
 			return sub;
 		}
 		else{
-			return Integer.valueOf(sub.intValue());
+			return (int) sub;
 		}
 	}
 
@@ -89,17 +86,17 @@ public class DemoProjectApplication {
 		if(a<0){
 			a = 0;
 		}
-			return truncateDecimal(Math.sqrt(a), 2);
+			return truncateDecimal(Math.sqrt(a));
 
 	}
 
-	private static BigDecimal truncateDecimal(double x,int numberofDecimals)
+	private static BigDecimal truncateDecimal(double x)
 	{
 		if(x>0){
-			return new BigDecimal(String.valueOf(x)).setScale(numberofDecimals, BigDecimal.ROUND_FLOOR);
+			return new BigDecimal(String.valueOf(x)).setScale(2, BigDecimal.ROUND_FLOOR);
 		}
 		else {
-			return new BigDecimal(String.valueOf(x)).setScale(numberofDecimals, BigDecimal.ROUND_CEILING);
+			return new BigDecimal(String.valueOf(x)).setScale(2, BigDecimal.ROUND_CEILING);
 		}
 	}
 
