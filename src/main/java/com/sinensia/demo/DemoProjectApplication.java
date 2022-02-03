@@ -85,7 +85,7 @@ public class DemoProjectApplication {
 			@RequestParam(value="a", defaultValue = "0") BigDecimal a
 	) {
 		if(a.compareTo(BigDecimal.ZERO) <0){
-			return -1;
+			return BigDecimal.ZERO;
 		}
 
 
