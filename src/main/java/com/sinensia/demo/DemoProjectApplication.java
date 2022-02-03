@@ -84,7 +84,7 @@ public class DemoProjectApplication {
 	public BigDecimal squareroot(
 			@RequestParam(value="a", defaultValue = "0") BigDecimal a
 	) {
-		if(a.compareTo(BigDecimal.ZERO) <0){
+		if(a.compareTo(BigDecimal.ZERO) <= 0){
 			return BigDecimal.ZERO;
 		}
 
