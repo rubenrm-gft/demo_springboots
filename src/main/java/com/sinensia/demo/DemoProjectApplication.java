@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Generated;
 import java.math.BigDecimal;
+import java.math.MathContext;
 
 import static java.math.RoundingMode.HALF_DOWN;
 
@@ -81,19 +82,17 @@ public class DemoProjectApplication {
 
 	@GetMapping("/sqrt")
 	public BigDecimal squareroot(
-			@RequestParam(value="a", defaultValue = "0") double a
+			@RequestParam(value="a", defaultValue = "0") BigDecimal a
 	) {
-		if(a<0){
-			a = 0;
+		if(a.compareTo(BigDecimal.ZERO) <0){
+			return -1;
 		}
-			return truncateDecimal(Math.sqrt(a));
+
+
+		//System.out.println(a);
+		return a.sqrt(new MathContext(3));
 
 	}
 
-	private static BigDecimal truncateDecimal(double x)
-	{
-			return new BigDecimal(String.valueOf(x)).setScale(2, BigDecimal.ROUND_CEILING);
-
-	}
 
 }

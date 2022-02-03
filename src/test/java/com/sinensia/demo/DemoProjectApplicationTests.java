@@ -185,8 +185,8 @@ class DemoProjectApplicationTests {
 				"4, 2",
 				"100, 10",
 				"1.0, 1.0",
-				"-3, 0",
-				"-0.12, 0",
+				"-3, -1",
+				"-0.12, -1",
 				"2, 1.41"
 		})
 		void canSqrtCsvParameterizedFloat(String a, String expected) {
